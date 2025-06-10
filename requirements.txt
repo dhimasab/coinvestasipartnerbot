@@ -1,0 +1,4 @@
+pyTelegramBotAPI==4.13.0
+python-dotenv
+gspread
+oauth2client
