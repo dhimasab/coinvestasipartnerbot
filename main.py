@@ -35,7 +35,7 @@ bot = telebot.TeleBot(BOT_TOKEN)
 def get_active_groups():
     records = sheet.get_all_records()
     return [
-        int(row["Group ID"])
+        (int(row["Group ID"]), row.get("Mentions", "").strip())
         for row in records
         if row.get("Group ID") and row.get("Status", "").strip().lower() == "aktif"
     ]
@@ -75,7 +75,7 @@ def blast_message(message):
     active_groups = get_active_groups()
     print(f"🚀 Blast ke {len(active_groups)} grup aktif...")
 
-    for group_id in active_groups:
+    for group_id, mention in active_groups:
         try:
             if message.content_type == 'text':
                 bot.send_message(group_id, message.text, entities=message.entities)
@@ -87,6 +87,12 @@ def blast_message(message):
                 bot.send_document(group_id, message.document.file_id, caption=message.caption, caption_entities=message.caption_entities)
 
             print(f"✅ Berhasil kirim ke {group_id} ({message.content_type})")
+
+            # Tambahan: kirim mention kalau ada
+            if mention:
+                bot.send_message(group_id, mention)
+                print(f"💬 Mention dikirim ke {group_id}: {mention}")
+
         except Exception as e:
             print(f"❌ Gagal kirim ke {group_id}: {e}")
 
