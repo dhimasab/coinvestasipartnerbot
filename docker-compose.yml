@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  partnerbot:
+    build:
+      context: .
+    container_name: partnerbot
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - ANOTHER_ENV=${ANOTHER_ENV}
+    restart: unless-stopped
