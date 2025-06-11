@@ -4,8 +4,6 @@ services:
   partnerbot:
     build: .
     container_name: partnerbot
-    env_file:
-      - .env  # kalau ada, tapi kalau kamu pakai Portainer UI, bisa di-skip
     environment:
       - BOT_TOKEN=${BOT_TOKEN}
       - GOOGLE_CREDS_RAW=${GOOGLE_CREDS_RAW}
