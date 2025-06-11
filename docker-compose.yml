@@ -1,10 +1,15 @@
 version: "3.8"
+
 services:
   partnerbot:
-    build:
-      context: .
+    build: .
     container_name: partnerbot
+    env_file:
+      - .env  # kalau ada, tapi kalau kamu pakai Portainer UI, bisa di-skip
     environment:
       - BOT_TOKEN=${BOT_TOKEN}
-      - ANOTHER_ENV=${ANOTHER_ENV}
+      - GOOGLE_CREDS_RAW=${GOOGLE_CREDS_RAW}
+      - SHEET_ID=${SHEET_ID}
+      - SOURCE_CHANNEL_ID=${SOURCE_CHANNEL_ID}
+    command: python main.py
     restart: unless-stopped
